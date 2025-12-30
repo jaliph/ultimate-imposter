@@ -1,0 +1,28 @@
+[application]
+
+# Web server configuration
+[web.watcher]
+
+[web.watcher.dev]
+# Bind to all network interfaces so you can access from mobile
+addr = "0.0.0.0:8080"
+
+[web.app]
+
+# HTML title tag content
+title = "agent-x"
+
+# include `assets` in web platform
+[web.resource]
+
+# Additional CSS style files
+style = []
+
+# Additional JavaScript files
+script = []
+
+[web.resource.dev]
+
+# Javascript code file
+# serve: [dev-server] only
+script = []
