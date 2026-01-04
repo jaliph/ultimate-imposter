@@ -1,10 +1,10 @@
-# Agent-X: Social Deduction Game
+# Ultimate Imposter: Social Deduction Game
 
 A fun social deduction game built with Dioxus 0.7 where players try to find the imposter among them!
 
 ## 🎮 Game Overview
 
-**Agent-X** is a mobile-friendly web game for 3+ players. One player is randomly assigned as the imposter with a different word, while all other players receive the same word. Through discussion and voting, players try to identify the imposter before they blend in successfully.
+**Ultimate Imposter** is a mobile-friendly web game for 3+ players. One player is randomly assigned as the imposter with a different word, while all other players receive the same word. Through discussion and voting, players try to identify the imposter before they blend in successfully.
 
 ## 🚀 Quick Start
 
@@ -86,7 +86,7 @@ The game includes **20 categories** with over **400+ challenging word pairs**:
 ## 📂 Project Structure
 
 ```
-agent-x/
+ultimate-imposter/
 ├─ words.yaml          # Word categories and pairs (easily editable!)
 ├─ assets/
 │  ├─ favicon.ico
@@ -138,7 +138,7 @@ agent-x/
 
 ## 💾 Game Persistence & Session Management
 
-Agent-X features automatic game state persistence that allows you to resume your game seamlessly after browser refresh, closing tabs, or even restarting your device.
+Ultimate Imposter features automatic game state persistence that allows you to resume your game seamlessly after browser refresh, closing tabs, or even restarting your device.
 
 ### ✨ How It Works
 
@@ -187,8 +187,8 @@ localStorage.clear();
 
 **Browser Storage:**
 - Uses browser localStorage API
-- Storage key: `agent_x_game_{session-id}`
-- Session key: `agent_x_session_id`
+- Storage key: `ultimate_imposter_game_{session-id}`
+- Session key: `ultimate_imposter_session_id`
 - Data format: JSON serialized game state
 
 **Data Structure:**
@@ -255,18 +255,18 @@ dx serve --features server
 
 ## 🐳 Docker Deployment
 
-Deploy Agent-X using Docker for easy hosting and portability.
+Deploy ultimate-imposter using Docker for easy hosting and portability.
 
 ### Quick Start
 
 **Build the Docker image:**
 ```bash
-docker build -t agent-x .
+docker build -t ultimate-imposter .
 ```
 
 **Run the container:**
 ```bash
-docker run -d -p 8080:80 --name agent-x-app agent-x
+docker run -d -p 8080:80 --name ultimate-imposter-app ultimate-imposter
 ```
 
 The app will be available at `http://localhost:8080`
@@ -275,40 +275,40 @@ The app will be available at `http://localhost:8080`
 
 **Build the image:**
 ```bash
-docker build -t agent-x:latest .
+docker build -t ultimate-imposter:latest .
 ```
 
 **Run in background:**
 ```bash
-docker run -d -p 8080:80 --name agent-x-app agent-x:latest
+docker run -d -p 8080:80 --name ultimate-imposter-app ultimate-imposter:latest
 ```
 
 **Run with custom port:**
 ```bash
-docker run -d -p 3000:80 --name agent-x-app agent-x:latest
+docker run -d -p 3000:80 --name ultimate-imposter-app ultimate-imposter:latest
 ```
 
 **View logs:**
 ```bash
-docker logs agent-x-app
+docker logs ultimate-imposter-app
 ```
 
 **Stop the container:**
 ```bash
-docker stop agent-x-app
+docker stop ultimate-imposter-app
 ```
 
 **Remove the container:**
 ```bash
-docker rm agent-x-app
+docker rm ultimate-imposter-app
 ```
 
 **Rebuild after changes:**
 ```bash
-docker stop agent-x-app
-docker rm agent-x-app
-docker build -t agent-x:latest .
-docker run -d -p 8080:80 --name agent-x-app agent-x:latest
+docker stop ultimate-imposter-app
+docker rm ultimate-imposter-app
+docker build -t ultimate-imposter:latest .
+docker run -d -p 8080:80 --name ultimate-imposter-app ultimate-imposter:latest
 ```
 
 ### Docker Compose (Optional)
@@ -319,9 +319,9 @@ Create a `docker-compose.yml` file:
 version: '3.8'
 
 services:
-  agent-x:
+  ultimate-imposter:
     build: .
-    container_name: agent-x-app
+    container_name: ultimate-imposter-app
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -350,8 +350,8 @@ For production deployment on cloud platforms:
 **Deploy to DigitalOcean, AWS, or any VPS:**
 1. SSH into your server
 2. Install Docker: `curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh`
-3. Clone your repository: `git clone https://github.com/yourusername/agent-x.git`
-4. Build and run: `cd agent-x && docker build -t agent-x . && docker run -d -p 80:80 agent-x`
+3. Clone your repository: `git clone https://github.com/yourusername/ultimate-imposter.git`
+4. Build and run: `cd ultimate-imposter && docker build -t ultimate-imposter . && docker run -d -p 80:80 ultimate-imposter`
 
 **Deploy to Fly.io:**
 ```bash

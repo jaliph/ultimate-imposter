@@ -18,7 +18,7 @@ pub fn load_session_id() -> Option<String> {
         
         let window = window()?;
         let storage = window.local_storage().ok()??;
-        storage.get_item("agent_x_session_id").ok()?
+        storage.get_item("ultimate_imposter_session_id").ok()?
     }
     #[cfg(not(target_arch = "wasm32"))]
     {
@@ -34,7 +34,7 @@ pub fn save_session_id(_session_id: &str) {
         
         if let Some(window) = window() {
             if let Ok(Some(storage)) = window.local_storage() {
-                let _ = storage.set_item("agent_x_session_id", _session_id);
+                let _ = storage.set_item("ultimate_imposter_session_id", _session_id);
             }
         }
     }
@@ -48,7 +48,7 @@ pub fn load_game_state(session_id: &str) -> Option<GameState> {
         
         let window = window()?;
         let storage = window.local_storage().ok()??;
-        let key = format!("agent_x_game_{}", session_id);
+        let key = format!("ultimate_imposter_game_{}", session_id);
         let json = storage.get_item(&key).ok()??;
         serde_json::from_str(&json).ok()
     }
@@ -69,7 +69,7 @@ pub fn save_game_state(_state: &GameState) {
         if let Some(window) = window() {
             if let Ok(Some(storage)) = window.local_storage() {
                 if let Ok(json) = serde_json::to_string(_state) {
-                    let key = format!("agent_x_game_{}", _state.session_id);
+                    let key = format!("ultimate_imposter_game_{}", _state.session_id);
                     let _ = storage.set_item(&key, &json);
                 }
             }

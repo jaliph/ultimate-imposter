@@ -27,7 +27,7 @@ pub fn SetupScreen(
     rsx! {
         div { class: "setup-screen",
             div { class: "setup-header",
-                h1 { "🎮 Agent-X" }
+                h1 { "🎮 Ultimate Imposter" }
                 p { class: "subtitle", "The Social Deduction Game" }
             }
             

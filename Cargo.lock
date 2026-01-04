@@ -9,19 +9,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa"
 
 [[package]]
-name = "agent-x"
-version = "0.1.0"
-dependencies = [
- "dioxus",
- "getrandom 0.2.16",
- "serde",
- "serde_json",
- "serde_yaml",
- "uuid",
- "web-sys",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5306,6 +5293,19 @@ dependencies = [
  "memoffset",
  "tempfile",
  "winapi",
+]
+
+[[package]]
+name = "ultimate-imposter"
+version = "0.1.0"
+dependencies = [
+ "dioxus",
+ "getrandom 0.2.16",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "uuid",
+ "web-sys",
 ]
 
 [[package]]

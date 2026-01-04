@@ -10,7 +10,7 @@ addr = "0.0.0.0:8080"
 [web.app]
 
 # HTML title tag content
-title = "agent-x"
+title = "ultimate-imposter"
 
 # include `assets` in web platform
 [web.resource]
