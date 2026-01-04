@@ -29,7 +29,7 @@ pub fn EliminationScreen(
                         "🏆 Civilians win this round!"
                     }
                     p { class: "players-remaining",
-                        "All civilians receive +10 points"
+                        "Remaining civilians receive +10 points"
                     }
                 }
             } else {
@@ -58,9 +58,9 @@ pub fn EliminationScreen(
                         // Check if imposter was eliminated
                         if was_imposter {
                             // Imposter found - civilians win!
-                            // ALL civilians get points, even if they were eliminated before
                             for (i, player) in updated_players.iter_mut().enumerate() {
-                                if i != imposter_index() {
+                                // Award only active civilians; evicted players get nothing
+                                if i != imposter_index() && !player.is_eliminated {
                                     player.score += 10;
                                 }
                             }

@@ -80,18 +80,11 @@ pub fn CardViewScreen(
     
     // Determine what to show based on hard mode
     let is_imposter = current_card.card_type == CardType::Imposter;
-    let should_hide_imposter = hide_imposter_identity() && is_imposter;
+    let hard_mode_enabled = hide_imposter_identity();
+    let should_hide_imposter = hard_mode_enabled && is_imposter;
     
-    // If hard mode is on and this is the imposter, show civilian word instead
-    let displayed_word = if should_hide_imposter {
-        // Get the civilian word
-        cards_list.iter()
-            .find(|c| c.card_type == CardType::Normal)
-            .map(|c| c.word.clone())
-            .unwrap_or_else(|| current_card.word.clone())
-    } else {
-        current_card.word.clone()
-    };
+    // Always show each player's assigned word; hard mode only hides identity text
+    let displayed_word = current_card.word.clone();
 
     rsx! {
         div { class: "card-view-screen",
@@ -142,13 +135,15 @@ pub fn CardViewScreen(
                         div { class: "card-word",
                             "{displayed_word}"
                         }
-                        div { class: "card-type-hint",
-                            if should_hide_imposter {
-                                "👥 You are a civilian"
-                            } else if is_imposter {
-                                "🎭 You are the IMPOSTER!"
-                            } else {
-                                "👥 You are a civilian"
+                        if !hard_mode_enabled {
+                            div { class: "card-type-hint",
+                                if should_hide_imposter {
+                                    "👥 You are a civilian"
+                                } else if is_imposter {
+                                    "🎭 You are the IMPOSTER!"
+                                } else {
+                                    "👥 You are a civilian"
+                                }
                             }
                         }
                     }

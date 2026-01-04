@@ -1,5 +1,10 @@
 use crate::views::game::types::GameState;
 
+#[cfg(target_arch = "wasm32")]
+use once_cell::sync::Lazy;
+#[cfg(target_arch = "wasm32")]
+use std::sync::Mutex;
+
 // ============================================================================
 // Session Management & Persistence Functions
 // ============================================================================
@@ -45,6 +50,16 @@ pub fn load_game_state(session_id: &str) -> Option<GameState> {
     #[cfg(target_arch = "wasm32")]
     {
         use web_sys::window;
+
+        // Fast path: return in-memory cached state if matching session
+        static LAST_STATE: Lazy<Mutex<Option<GameState>>> = Lazy::new(|| Mutex::new(None));
+        if let Ok(cache) = LAST_STATE.lock() {
+            if let Some(state) = cache.as_ref() {
+                if state.session_id == session_id {
+                    return Some(state.clone());
+                }
+            }
+        }
         
         let window = window()?;
         let storage = window.local_storage().ok()??;
@@ -66,11 +81,26 @@ pub fn save_game_state(_state: &GameState) {
     {
         use web_sys::window;
         
+        // Avoid redundant writes if state JSON hasn't changed (saves time on mobile unlock)
+        static LAST_SAVED_JSON: Lazy<Mutex<Option<String>>> = Lazy::new(|| Mutex::new(None));
+        static LAST_STATE: Lazy<Mutex<Option<GameState>>> = Lazy::new(|| Mutex::new(None));
+
         if let Some(window) = window() {
             if let Ok(Some(storage)) = window.local_storage() {
                 if let Ok(json) = serde_json::to_string(_state) {
-                    let key = format!("ultimate_imposter_game_{}", _state.session_id);
-                    let _ = storage.set_item(&key, &json);
+                    let mut cache = LAST_SAVED_JSON.lock().unwrap_or_else(|e| e.into_inner());
+                    let is_new = cache.as_ref().map(|prev| prev != &json).unwrap_or(true);
+                    if is_new {
+                        let key = format!("ultimate_imposter_game_{}", _state.session_id);
+                        let _ = storage.set_item(&key, &json);
+                        *cache = Some(json);
+                        if let Ok(mut state_cache) = LAST_STATE.lock() {
+                            *state_cache = Some(_state.clone());
+                        }
+                    }
+                } else if let Ok(mut state_cache) = LAST_STATE.lock() {
+                    // Even if serialization failed, keep latest state in memory for fast resume
+                    *state_cache = Some(_state.clone());
                 }
             }
         }

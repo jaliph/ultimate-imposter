@@ -89,11 +89,18 @@ pub fn RoundEndScreen(
                 
                 if imposter_found {
                     p { class: "result-message",
-                        "🎉 All civilians get 10 points!"
+                        "🎉 Remaining civilians get 10 points!"
                     }
                 } else {
                     p { class: "result-message",
                         "😈 The imposter gets 20 points!"
+                    }
+                }
+
+                div { class: "imposter-summary",
+                    h3 { "🕵️ Imposter Reveal" }
+                    p { class: "imposter-name",
+                        "Imposter: {imposter_name}"
                     }
                 }
             }
